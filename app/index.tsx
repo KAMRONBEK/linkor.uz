@@ -1,11 +1,14 @@
+import HomeBody from '@/src/screens/home/body/homeBody'
+import Header from '@/src/screens/home/header/header'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 const App = () => {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <>
+    <Header/>
+    <HomeBody/>
+    </>
   )
 }
 
