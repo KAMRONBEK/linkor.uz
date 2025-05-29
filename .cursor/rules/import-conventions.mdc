@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Import Conventions & Barrel Exports
+
+## Path Mappings
+Use absolute imports with these path mappings defined in [tsconfig.json](mdc:tsconfig.json):
+
+### Shared Utilities
+```typescript
+import { useI18n, SCREEN_NAMES } from '@/shared';
+```
+
+### Component Layers
+```typescript
+import { Button, Input, LanguageSelector } from '@/atoms';
+import { LoginForm, LoginCredentials } from '@/molecules';
+import { ComplexComponent } from '@/organisms';
+```
+
+### Frontend Utilities
+```typescript
+import { TabBarIcon } from '@/nav-components';
+import { useColorScheme } from '@/hooks';
+```
+
+## Barrel Export Files
+All directories have index.ts files for clean imports:
+- [src/shared/index.ts](mdc:src/shared/index.ts) - Shared utilities
+- [src/frontend/components/atoms/index.ts](mdc:src/frontend/components/atoms/index.ts) - Atom components
+- [src/frontend/components/molecules/index.ts](mdc:src/frontend/components/molecules/index.ts) - Molecule components
+
+## ESLint Enforcement
+The [eslint.config.js](mdc:eslint.config.js) enforces these patterns:
+
+❌ **Forbidden:**
+```typescript
+import { useI18n } from '@/shared/hooks/useI18n';
+import { Button } from '@/atoms/Button';
+```
+
+✅ **Required:**
+```typescript
+import { useI18n } from '@/shared';
+import { Button } from '@/atoms';
+```
+
+## Architectural Rules
+- Atoms cannot import molecules/organisms/templates/pages
+- Molecules cannot import organisms/templates/pages  
+- Organisms cannot import templates/pages
+- Backend cannot import frontend code
+

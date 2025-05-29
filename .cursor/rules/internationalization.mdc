@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Internationalization (i18n)
+
+## Supported Languages
+The app supports three languages with Uzbek as the main language:
+- **uz** (Uzbek) - Primary language
+- **en** (English) - Fallback language  
+- **ru** (Russian) - Additional language
+
+## Configuration
+i18n is configured in [src/shared/i18n/index.ts](mdc:src/shared/i18n/index.ts):
+- Automatic device language detection
+- Falls back to Uzbek if device language not supported
+- Uses `expo-localization` for device locale detection
+
+## Translation Files
+```
+src/shared/i18n/locales/
+├── en.json    # English translations
+├── ru.json    # Russian translations  
+└── uz.json    # Uzbek translations (primary)
+```
+
+## Usage Pattern
+```typescript
+import { useI18n } from '@/shared';
+
+function MyComponent() {
+  const { t, currentLanguage, changeLanguage } = useI18n();
+  
+  return (
+    <Text>{t('common.welcome')}</Text>
+    <Text>{t('navigation.home')}</Text>
+    <Text>{t('auth.signIn')}</Text>
+  );
+}
+```
+
+## Translation Key Structure
+Organized by category:
+- `common.*` - Common UI text
+- `navigation.*` - Navigation labels
+- `auth.*` - Authentication related
+- `settings.*` - Settings screen
+- `errors.*` - Error messages
+- `app.*` - App metadata
+
+## Language Selector
+Use the [LanguageSelector](mdc:src/frontend/components/atoms/LanguageSelector/LanguageSelector.tsx) component:
+```typescript
+import { LanguageSelector } from '@/atoms';
+
+<LanguageSelector size="small" variant="ghost" />
+```
+

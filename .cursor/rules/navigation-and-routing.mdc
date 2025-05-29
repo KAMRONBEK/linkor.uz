@@ -1,0 +1,70 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Navigation & Routing
+
+## Screen Constants
+Use constants from [src/shared/constants/screens.ts](mdc:src/shared/constants/screens.ts):
+
+```typescript
+import { SCREEN_NAMES, PUBLIC_ROUTES, PRIVATE_ROUTES, MODAL_SCREENS } from '@/shared';
+
+// Navigate to screens
+router.push(SCREEN_NAMES.LOGIN_MODAL);
+router.push(SCREEN_NAMES.HOME);
+```
+
+## Route Categories
+### Public Routes (no authentication required)
+- Home, Explore
+- Login, Signup, Password reset
+- Language settings
+
+### Private Routes (authentication required)  
+- Profile, Settings, Notifications
+- Account/Privacy settings
+- User content
+
+### Modal Screens
+Modal presentation for overlays:
+- Login/Signup modals
+- Profile modal
+- Settings modals
+
+## Helper Functions
+```typescript
+import { isPublicRoute, isPrivateRoute, isModalScreen } from '@/shared';
+
+// Route checking
+if (isPrivateRoute(routeName)) {
+  // Redirect to login
+}
+
+if (isModalScreen(routeName)) {
+  // Handle modal-specific logic
+}
+```
+
+## Tab Navigation
+Main tab structure in [app/(tabs)/_layout.tsx](mdc:app/(tabs)/_layout.tsx):
+- **index** - Home screen with login form
+- **explore** - Explore/discovery screen  
+- **settings** - Settings and preferences
+
+## Navigation Components
+- [TabBarIcon](mdc:src/frontend/components/navigation/TabBarIcon.tsx) - Tab bar icons
+- Use `@/nav-components` barrel export for navigation components
+
+## Expo Router Structure
+```
+app/
+├── (tabs)/          # Tab navigation group
+│   ├── _layout.tsx  # Tab layout configuration
+│   ├── index.tsx    # Home tab
+│   ├── explore.tsx  # Explore tab
+│   └── settings.tsx # Settings tab
+└── modal screens    # Modal presentations
+```
+

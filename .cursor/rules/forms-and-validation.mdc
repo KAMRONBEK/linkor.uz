@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Forms & Validation
+
+## React Hook Form Integration
+Forms use `react-hook-form` for better performance and cleaner validation.
+
+## Example: LoginForm
+See [src/frontend/components/molecules/LoginForm/LoginForm.tsx](mdc:src/frontend/components/molecules/LoginForm/LoginForm.tsx):
+
+```typescript
+import { useForm, Controller } from 'react-hook-form';
+import { useI18n } from '@/shared';
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+function MyForm() {
+  const { t } = useI18n();
+  const { control, handleSubmit, formState: { errors, isValid } } = useForm<FormData>({
+    mode: 'onChange',
+    defaultValues: { email: '', password: '' }
+  });
+
+  const validateEmail = (value: string) => {
+    if (!value) return t('auth.emailRequired');
+    if (!emailRegex.test(value)) return t('auth.emailInvalid');
+    return true;
+  };
+
+  return (
+    <Controller
+      control={control}
+      name="email"
+      rules={{ validate: validateEmail }}
+      render={({ field: { onChange, value } }) => (
+        <Input
+          value={value}
+          onChangeText={onChange}
+          error={errors.email?.message}
+        />
+      )}
+    />
+  );
+}
+```
+
+## Validation Pattern
+- Use `rules={{ validate: validationFunction }}` 
+- Validation functions return error message string or `true`
+- Error messages use i18n keys for multilingual support
+- Real-time validation with `mode: 'onChange'`
+
+## Form Submission
+```typescript
+const onSubmit = (data: FormData) => {
+  // Handle form data
+};
+
+<Button onPress={handleSubmit(onSubmit)} disabled={!isValid} />
+```
+

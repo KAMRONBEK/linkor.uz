@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Structure & Architecture
+
+## Overview
+This is a React Native/Expo project using TypeScript, Tamagui, and atomic design principles.
+
+## Directory Structure
+- `src/frontend/` - Frontend components and logic
+- `src/backend/` - Backend utilities and services  
+- `src/shared/` - Shared utilities, hooks, and constants
+- `app/` - Expo Router app directory (active)
+- `src/frontend/app/` - Source version (reference only)
+
+## Atomic Design Architecture
+Components are organized using atomic design methodology:
+- `src/frontend/components/atoms/` - Basic building blocks (Button, Input, LanguageSelector)
+- `src/frontend/components/molecules/` - Component combinations (LoginForm)
+- `src/frontend/components/organisms/` - Complex component sections
+- `src/frontend/components/templates/` - Page layouts
+- `src/frontend/components/pages/` - Complete pages
+
+## Key Configuration Files
+- [tsconfig.json](mdc:tsconfig.json) - TypeScript configuration with path mappings
+- [eslint.config.js](mdc:eslint.config.js) - ESLint rules enforcing architecture
+- [tamagui.config.ts](mdc:tamagui.config.ts) - UI theme configuration
+- [.gitignore](mdc:.gitignore) - Comprehensive ignore patterns
+
+## Entry Points
+- [app/(tabs)/_layout.tsx](mdc:app/(tabs)/_layout.tsx) - Tab navigation layout
+- [app/(tabs)/index.tsx](mdc:app/(tabs)/index.tsx) - Home screen
+- [src/shared/i18n/index.ts](mdc:src/shared/i18n/index.ts) - Internationalization setup
+

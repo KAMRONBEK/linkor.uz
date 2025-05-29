@@ -1,0 +1,69 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Theming & Styling
+
+## Tamagui Theme System
+Use Tamagui's semantic color system instead of hardcoded colors.
+
+## Theme Usage
+```typescript
+import { useTheme } from 'tamagui';
+
+function MyComponent() {
+  const theme = useTheme();
+  
+  return (
+    <View backgroundColor={theme.background?.val}>
+      <Text color={theme.color12?.val}>High contrast text</Text>
+      <Text color={theme.color11?.val}>Secondary text</Text>
+    </View>
+  );
+}
+```
+
+## Semantic Color Scale
+- `theme.color12` - Highest contrast (active states, primary text)
+- `theme.color11` - Secondary contrast (inactive states, secondary text)
+- `theme.color10` - Medium contrast
+- `theme.background` - Background color
+- `theme.borderColor` - Border color
+
+## Theme Properties
+- `.val` - Returns actual color value (e.g., '#000')
+- `.get()` - Optimized for performance (CSS vars on web, values on native)
+- `.variable` - CSS variable name
+
+## Examples from Codebase
+Tab bar theming in [app/(tabs)/_layout.tsx](mdc:app/(tabs)/_layout.tsx):
+```typescript
+tabBarActiveTintColor: theme.color12?.val,
+tabBarInactiveTintColor: theme.color11?.val,
+tabBarStyle: {
+  backgroundColor: theme.background?.val,
+  borderTopColor: theme.borderColor?.val,
+}
+```
+
+## Component Styling
+Use Tamagui props for styling:
+```typescript
+<Stack 
+  flex={1} 
+  backgroundColor="$background" 
+  padding="$4"
+  gap="$3"
+>
+  <Text fontSize="$6" fontWeight="bold" color="$color12">
+    Title
+  </Text>
+</Stack>
+```
+
+## Design Tokens
+- Spacing: `$1`, `$2`, `$3`, `$4`, etc.
+- Font sizes: `$3`, `$4`, `$6`, `$8`, etc.
+- Colors: `$background`, `$color12`, `$gray11`, etc.
+
