@@ -1,6 +1,6 @@
 # Linkor.uz 🚀
 
-A modern freelancing platform built with React Native, Expo, and Tamagui. Connect talented freelancers with clients across Uzbekistan. This project follows atomic design principles and uses TypeScript for type safety.
+A modern freelancing platform built with React Native, Expo, and Tamagui. Connect talented freelancers with clients across Uzbekistan. This project follows atomic design principles and features **responsive design** that adapts beautifully from mobile to web.
 
 ## 🌟 Features
 
@@ -20,6 +20,7 @@ A modern freelancing platform built with React Native, Expo, and Tamagui. Connec
 - **Review System**: Rate and review completed work
 
 ### Platform Features
+- **Responsive Design**: Adaptive UI for mobile, tablet, and web
 - **Multi-language Support**: Uzbek (primary), English, and Russian
 - **Cross-platform**: iOS, Android, and Web support
 - **Real-time Chat**: Instant messaging between users
@@ -32,8 +33,10 @@ A modern freelancing platform built with React Native, Expo, and Tamagui. Connec
 This project implements a clean, scalable architecture with:
 
 - **Frontend**: React Native with Expo Router
-- **UI Framework**: Tamagui for modern, performant components
+- **UI Framework**: Tamagui with responsive breakpoints
 - **Design System**: Atomic Design (Atoms → Molecules → Organisms → Templates → Pages)
+- **Responsive Design**: Mobile-first with web-optimized layouts
+- **Navigation**: Adaptive navigation (tabs on mobile, sidebar on web)
 - **Type Safety**: Comprehensive TypeScript interfaces
 - **Internationalization**: i18next with automatic language detection
 - **Code Quality**: ESLint with custom architectural enforcement rules
@@ -46,7 +49,8 @@ src/
 │   ├── types/                 # TypeScript type definitions
 │   │   └── freelancing.ts     # Complete freelancing platform types
 │   ├── constants/             # App constants
-│   │   └── screens.ts         # Screen names and routes
+│   │   ├── screens.ts         # Screen names and routes
+│   │   └── navigation.ts      # Navigation items configuration
 │   ├── i18n/                  # Internationalization
 │   │   ├── index.ts          # i18n configuration
 │   │   └── locales/          # Translation files
@@ -62,12 +66,17 @@ src/
 │       │   ├── Input/        # Reusable input component
 │       │   └── LanguageSelector/ # Language switching component
 │       ├── molecules/        # Component combinations
-│       │   └── LoginForm/    # Login form with validation
+│       │   ├── LoginForm/    # Login form with validation
+│       │   └── WebHeader/    # Web-specific header
+│       ├── organisms/        # Complex component sections
+│       ├── templates/        # Page layout templates
+│       │   └── ResponsiveContainer/ # Responsive layout container
 │       └── navigation/       # Navigation components
-│           └── TabBarIcon.tsx # Tab bar icons
+│           ├── TabBarIcon.tsx        # Tab bar icons
+│           └── ResponsiveNavigation/ # Adaptive navigation
 └── app/                       # Expo Router pages
     ├── (tabs)/               # Main tab navigation
-    │   ├── _layout.tsx       # Tab layout configuration
+    │   ├── _layout.tsx       # Responsive tab layout
     │   ├── index.tsx         # Home/Landing page
     │   ├── browse-gigs.tsx   # Browse services/gigs
     │   ├── my-projects.tsx   # Project management
@@ -75,6 +84,69 @@ src/
     │   └── profile.tsx       # User profiles
     └── _layout.tsx           # Root layout with Tamagui
 ```
+
+## 📱💻 Responsive Design
+
+### Adaptive Navigation System
+The platform features a sophisticated responsive navigation that adapts to screen size:
+
+- **Mobile (< 800px)**: Traditional tab navigation at bottom
+- **Web (≥ 800px)**: Sidebar navigation with collapsible design
+- **Tablet**: Collapsed sidebar for space efficiency
+
+### Breakpoint System
+Using Tamagui's responsive system with custom breakpoints:
+
+```typescript
+// Configured breakpoints
+xs: { maxWidth: 660 },    // Small mobile
+sm: { maxWidth: 800 },    // Large mobile
+md: { maxWidth: 1020 },   # Tablet
+lg: { maxWidth: 1280 },   # Desktop
+xl: { maxWidth: 1420 },   # Large desktop
+xxl: { maxWidth: 1600 }   # Extra large
+```
+
+### Component Responsiveness
+- **ResponsiveContainer**: Layout template adapting content for different screen sizes
+- **ResponsiveNavigation**: Switches between tabs and sidebar automatically
+- **Mobile-first**: All components designed mobile-first, enhanced for larger screens
+
+### Usage Example
+```tsx
+import { ResponsiveContainer } from '@/templates';
+
+<ResponsiveContainer sidebar={sidebarContent} maxWidth={1200}>
+  <YStack gap="$4" $sm={{ gap: '$2' }}>
+    <Text fontSize="$6" $sm={{ fontSize: '$4' }}>
+      Responsive Text
+    </Text>
+  </YStack>
+</ResponsiveContainer>
+```
+
+## 🧭 Navigation Architecture
+
+### Single Source of Truth
+Navigation items are defined once in `src/shared/constants/navigation.ts`:
+
+```typescript
+export const NAVIGATION_ITEMS: NavigationItem[] = [
+  { 
+    href: '/', 
+    icon: Home, 
+    labelKey: 'navigation.home', 
+    name: SCREEN_NAMES.HOME 
+  },
+  // ... other items
+];
+```
+
+### Benefits
+- **DRY Principle**: No duplication between mobile tabs and web sidebar
+- **Type Safety**: Shared `NavigationItem` interface
+- **Easy Maintenance**: Add/remove screens in one place
+- **Consistency**: Same navigation structure across platforms
 
 ## 🌍 Internationalization (i18n)
 
@@ -87,7 +159,7 @@ The platform supports three languages targeting the Uzbekistan market:
 
 ### Features
 - **Automatic Detection**: Detects device language on startup
-- **Manual Switching**: Language selector component
+- **Manual Switching**: Language selector component with responsive sizing
 - **Comprehensive Coverage**: All UI elements, messages, and content
 - **Professional Terminology**: Freelancing-specific translations
 
@@ -120,7 +192,8 @@ const MyComponent = () => {
 
 ## 🎨 Freelancing Platform Screens
 
-### Main Navigation Tabs
+### Main Navigation
+Dynamic navigation generated from `NAVIGATION_ITEMS`:
 - **Home**: Landing page with hero section, categories, featured gigs
 - **Browse Gigs**: Search and filter freelancer services
 - **My Projects**: Project management and proposal viewing
@@ -130,36 +203,36 @@ const MyComponent = () => {
 ### Key Features by Screen
 
 #### Home Screen
-- Hero section with search
-- Popular categories
-- Featured gigs
+- Responsive hero section with adaptive search
+- Popular categories grid (responsive layout)
+- Featured gigs carousel
 - Platform statistics
-- "How it works" guide
+- "How it works" guide with responsive steps
 
 #### Browse Gigs Screen
-- Advanced search and filters
-- Category browsing
-- Gig cards with ratings and pricing
-- Sort by relevance, price, delivery time
+- Advanced search and filters (mobile-optimized)
+- Category browsing with responsive grid
+- Gig cards with adaptive sizing
+- Sort options with mobile-friendly dropdowns
 
 #### My Projects Screen
-- Project status tabs (Active, Completed, Cancelled)
-- Proposal management
-- Project details and timeline
-- Budget and milestone tracking
+- Responsive project status tabs
+- Proposal management with adaptive layouts
+- Project details with responsive timelines
+- Budget tracking with mobile-optimized charts
 
 #### Messages Screen
-- Conversation list
-- Real-time messaging
-- Online/offline status
-- File attachments support
+- Responsive conversation list
+- Real-time messaging with adaptive bubbles
+- Online/offline status indicators
+- File attachments with responsive previews
 
 #### Profile Screen
-- Professional profile display
-- Portfolio showcase
-- Skills and experience
-- Reviews and ratings
-- Earnings statistics
+- Responsive professional profile
+- Portfolio showcase with adaptive galleries
+- Skills and experience with responsive layouts
+- Reviews with mobile-optimized cards
+- Earnings statistics with responsive charts
 
 ## 🚀 Getting Started
 
@@ -219,28 +292,68 @@ npm run type-check    # Run TypeScript type checking
 - Molecules cannot import organisms/templates/pages
 - Organisms cannot import templates/pages
 - All imports use absolute paths with barrel exports
+- Navigation items defined once in shared constants
 
 ## 🎨 UI Components & Design System
 
-Built with Tamagui for optimal performance and modern design:
+Built with Tamagui for optimal performance and responsive design:
 
 ### Component Library
 - **Atoms**: Button, Input, LanguageSelector
-- **Molecules**: LoginForm, SearchBar
-- **Navigation**: TabBarIcon with Lucide icons
+- **Molecules**: LoginForm, WebHeader, SearchBar
+- **Organisms**: Complex feature sections
+- **Templates**: ResponsiveContainer, layout templates
+- **Navigation**: ResponsiveNavigation, TabBarIcon with Lucide icons
 
-### Example Usage
+### Template Layer
+Templates provide reusable layout patterns:
+
+```tsx
+import { ResponsiveContainer } from '@/templates';
+
+// Responsive layout with optional sidebar
+<ResponsiveContainer 
+  sidebar={sidebarContent} 
+  sidebarWidth={25}
+  maxWidth={1200}
+  padded
+>
+  <YStack gap="$4">
+    <Text>Main content adapts to screen size</Text>
+  </YStack>
+</ResponsiveContainer>
+```
+
+### Responsive Component Usage
 ```tsx
 import { Button, Input } from '@/atoms';
 import { LoginForm } from '@/molecules';
 
 <Button 
-  variant="primary" 
+  variant="outlined" 
   size="md" 
+  $sm={{ size: "sm" }}  // Smaller on mobile
   icon={<Plus size={16} />}
 >
   Post Project
 </Button>
+
+<Input 
+  placeholder="Search projects..."
+  size="md"
+  $xs={{ size: "sm" }}  // Responsive sizing
+/>
+```
+
+### Navigation Components
+```tsx
+import { NAVIGATION_ITEMS } from '@/shared';
+import { ResponsiveNavigation } from '@/nav-components';
+
+// Automatically adapts between tabs and sidebar
+<ResponsiveNavigation>
+  <YourPageContent />
+</ResponsiveNavigation>
 ```
 
 ## 💼 Freelancing Platform Types
@@ -311,8 +424,17 @@ eas build --platform all
 2. Create a feature branch (`git checkout -b feature/freelancing-feature`)
 3. Follow the coding standards and architectural guidelines
 4. Ensure all TypeScript types are properly defined
-5. Test on multiple platforms
-6. Submit a Pull Request
+5. Test responsive design on multiple screen sizes
+6. Verify navigation works on both mobile and web
+7. Test on multiple platforms
+8. Submit a Pull Request
+
+## 📚 Documentation
+
+- **[Project Specification](docs/PROJECT_SPECIFICATION.md)**: Complete project requirements and roadmap
+- **[Responsive Design Guide](RESPONSIVE_DESIGN.md)**: Detailed implementation guide
+- **[Custom Instructions](custom_instructions/)**: Development guidelines and patterns
+- **[API Documentation](docs/)**: Backend API specifications
 
 ## 📄 License
 
@@ -321,11 +443,12 @@ This project is licensed under the MIT License.
 ## 🙏 Acknowledgments
 
 - [Expo](https://expo.dev/) - React Native development platform
-- [Tamagui](https://tamagui.dev/) - Universal UI system and design tokens
+- [Tamagui](https://tamagui.dev/) - Universal UI system with responsive design
 - [Lucide Icons](https://lucide.dev/) - Beautiful icon library
 - [react-i18next](https://react.i18next.com/) - Internationalization framework
 - [React Hook Form](https://react-hook-form.com/) - Performant forms with validation
 
 ---
 
-**Connecting talent with opportunity across Uzbekistan** 🇺🇿
+**Connecting talent with opportunity across Uzbekistan** 🇺🇿  
+*Now with beautiful responsive design from mobile to desktop* 📱💻

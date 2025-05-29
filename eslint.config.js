@@ -92,6 +92,10 @@ module.exports = [
               message: 'Use barrel exports from @/atoms, @/molecules, @/organisms instead of direct imports to subdirectories.',
             },
             {
+              group: ['@/templates/**'],
+              message: 'Use barrel exports from @/templates instead of direct imports to subdirectories.',
+            },
+            {
               group: ['@/frontend/components/navigation/**', '@/frontend/constants/**', '@/frontend/hooks/**'],
               message: 'Use barrel exports from @/nav-components, @/constants, @/hooks instead of direct imports to subdirectories.',
             },
@@ -217,6 +221,27 @@ module.exports = [
             {
               group: ['../frontend/**', '../../frontend/**', '@/frontend/**'],
               message: 'Backend cannot import from frontend. This violates architectural boundaries.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // Atomic Design Enforcement - Templates (cannot import pages)
+    files: ['src/frontend/components/templates/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../src/**', '../../src/**', '../../../src/**'],
+              message: 'Use absolute imports (@/backend/*, @/frontend/*, @/shared/*, etc.) instead of relative imports to src/.',
+            },
+            {
+              group: ['../{pages}/**', '../../{pages}/**'],
+              message: 'Templates cannot import from pages. This violates atomic design principles.',
             },
           ],
         },

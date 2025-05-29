@@ -27,57 +27,15 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/backend/*": [
-        "src/backend/*"
-      ],
-      "@/frontend/*": [
-        "src/frontend/*"
-      ],
-      "@/shared/*": [
-        "src/shared/*"
-      ],
-      "@/shared": [
-        "src/shared"
-      ],
-      "@/components/*": [
-        "src/frontend/components/*"
-      ],
-      "@/atoms/*": [
-        "src/frontend/components/atoms/*"
-      ],
-      "@/atoms": [
-        "src/frontend/components/atoms"
-      ],
-      "@/molecules/*": [
-        "src/frontend/components/molecules/*"
-      ],
-      "@/molecules": [
-        "src/frontend/components/molecules"
-      ],
-      "@/organisms/*": [
-        "src/frontend/components/organisms/*"
-      ],
-      "@/organisms": [
-        "src/frontend/components/organisms"
-      ],
-      "@/templates/*": [
-        "src/frontend/components/templates/*"
-      ],
-      "@/templates": [
-        "src/frontend/components/templates"
-      ],
-      "@/pages/*": [
-        "src/frontend/components/pages/*"
-      ],
-      "@/nav-components": [
-        "src/frontend/components/navigation"
-      ],
-      "@/constants": [
-        "src/frontend/constants"
-      ],
-      "@/hooks": [
-        "src/frontend/hooks"
-      ]
+      "@/*": ["./src/*"],
+      "@/shared": ["./src/shared"],
+      "@/atoms": ["./src/frontend/components/atoms"],
+      "@/molecules": ["./src/frontend/components/molecules"],
+      "@/organisms": ["./src/frontend/components/organisms"],
+      "@/templates": ["./src/frontend/components/templates"],
+      "@/pages": ["./src/frontend/components/pages"],
+      "@/nav-components": ["./src/frontend/components/navigation"],
+      "@/hooks": ["./src/frontend/hooks"]
     }
   },
   "include": [

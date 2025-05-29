@@ -1,71 +1,51 @@
-import { Briefcase, Home, MessageCircle, Search, User } from '@tamagui/lucide-icons';
-import { Tabs } from 'expo-router';
-import { useTheme } from 'tamagui';
+import { Slot, Tabs } from 'expo-router';
+import { Platform } from 'react-native';
+import { useMedia, useTheme } from 'tamagui';
 
-import { TabBarIcon } from '@/nav-components';
-import { useI18n } from '@/shared';
+import { ResponsiveNavigation, TabBarIcon } from '@/nav-components';
+import { NAVIGATION_ITEMS, useI18n } from '@/shared';
 
 export default function TabLayout() {
     const theme = useTheme();
     const { t } = useI18n();
+    const media = useMedia();
 
+    // On web with larger screens, use ResponsiveNavigation with Slot
+    if (Platform.OS === 'web' && media.gtSm) {
+        return (
+            <ResponsiveNavigation>
+                <Slot />
+            </ResponsiveNavigation>
+        );
+    }
+
+    // On mobile and small web screens, use traditional tabs
     return (
-        <Tabs
-            screenOptions={{
-                tabBarActiveTintColor: theme.color12?.val,
-                tabBarInactiveTintColor: theme.color11?.val,
-                headerShown: false,
-                tabBarStyle: {
-                    backgroundColor: theme.background?.val,
-                    borderTopColor: theme.borderColor?.val,
-                },
-            }}
-        >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: t('navigation.home'),
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon IconComponent={Home} color={color} focused={focused} />
-                    ),
+        <ResponsiveNavigation>
+            <Tabs
+                screenOptions={{
+                    tabBarActiveTintColor: theme.color12?.val,
+                    tabBarInactiveTintColor: theme.color11?.val,
+                    headerShown: false,
+                    tabBarStyle: {
+                        backgroundColor: theme.background?.val,
+                        borderTopColor: theme.borderColor?.val,
+                    },
                 }}
-            />
-            <Tabs.Screen
-                name="browse-gigs"
-                options={{
-                    title: t('navigation.browseGigs'),
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon IconComponent={Search} color={color} focused={focused} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="my-projects"
-                options={{
-                    title: t('navigation.myProjects'),
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon IconComponent={Briefcase} color={color} focused={focused} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="messages"
-                options={{
-                    title: t('navigation.messages'),
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon IconComponent={MessageCircle} color={color} focused={focused} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="profile"
-                options={{
-                    title: t('navigation.profile'),
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon IconComponent={User} color={color} focused={focused} />
-                    ),
-                }}
-            />
-        </Tabs>
+            >
+                {NAVIGATION_ITEMS.map((item) => (
+                    <Tabs.Screen
+                        key={item.name}
+                        name={item.name}
+                        options={{
+                            title: t(item.labelKey),
+                            tabBarIcon: ({ color, focused }) => (
+                                <TabBarIcon IconComponent={item.icon} color={color} focused={focused} />
+                            ),
+                        }}
+                    />
+                ))}
+            </Tabs>
+        </ResponsiveNavigation>
     );
 } 
