@@ -12,19 +12,25 @@ const languageDetector = {
     type: 'languageDetector' as const,
     async: true,
     detect: (callback: (lng: string) => void) => {
-        // Get device locale
-        const deviceLocale = getLocales()[0].languageCode;
-        const supportedLanguages = ['en', 'ru', 'uz'];
+        try {
+            // Get device locale with null checks
+            const locales = getLocales();
+            const deviceLocale = locales?.[0]?.languageCode;
+            const supportedLanguages = ['en', 'ru', 'uz'];
 
-        // Extract language code (e.g., 'en-US' -> 'en')
-        const languageCode = deviceLocale?.split('-')[0];
+            // Extract language code (e.g., 'en-US' -> 'en')
+            const languageCode = deviceLocale?.split('-')[0];
 
-        // Use detected language if supported, otherwise default to Uzbek
-        const detectedLanguage = supportedLanguages.includes(languageCode || '')
-            ? languageCode
-            : 'uz';
+            // Use detected language if supported, otherwise default to Uzbek
+            const detectedLanguage = supportedLanguages.includes(languageCode || '')
+                ? languageCode
+                : 'uz';
 
-        callback(detectedLanguage!);
+            callback(detectedLanguage || 'uz');
+        } catch {
+            // Fallback to Uzbek if any error occurs
+            callback('uz');
+        }
     },
     init: () => { },
     cacheUserLanguage: () => { },

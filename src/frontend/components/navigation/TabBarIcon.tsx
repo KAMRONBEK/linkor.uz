@@ -1,16 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-
+import { StyleProp, ViewStyle } from 'react-native';
 export interface TabBarIconProps {
-    name: React.ComponentProps<typeof Ionicons>['name'];
+    IconComponent: React.ComponentType<{ color?: string; size?: number, style: StyleProp<ViewStyle> }>;
     color: string;
     focused?: boolean;
 }
 
-export function TabBarIcon({ name, color, focused }: TabBarIconProps) {
+export function TabBarIcon({ IconComponent, color, focused }: TabBarIconProps) {
     return (
-        <Ionicons
-            name={name}
+        <IconComponent
             size={24}
             color={color}
             style={{ opacity: focused ? 1 : 0.7 }}

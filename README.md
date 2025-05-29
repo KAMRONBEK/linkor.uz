@@ -1,154 +1,173 @@
 # Linkor.uz 🚀
 
-A modern professional networking platform built with React Native, Expo, and Firebase. This project follows atomic design principles and uses TypeScript for type safety.
+A modern freelancing platform built with React Native, Expo, and Tamagui. Connect talented freelancers with clients across Uzbekistan. This project follows atomic design principles and uses TypeScript for type safety.
 
 ## 🌟 Features
 
-- **Professional Networking**: Connect with professionals in your field
-- **Multi-language Support**: English, Russian, and Uzbek languages
-- **Real-time Messaging**: Chat with your connections
-- **Post Sharing**: Share professional updates and insights
-- **Profile Management**: Comprehensive user profiles
+### For Freelancers
+- **Browse & Apply**: Find projects that match your skills
+- **Gig Creation**: Offer your services with custom packages
+- **Portfolio Management**: Showcase your best work
+- **Real-time Messaging**: Communicate with clients
+- **Earnings Tracking**: Monitor your income and withdrawals
+- **Proposal System**: Submit competitive bids
+
+### For Clients
+- **Project Posting**: Post detailed project requirements
+- **Freelancer Discovery**: Browse services and profiles
+- **Proposal Management**: Review and compare freelancer bids
+- **Order Management**: Track project progress and deliverables
+- **Review System**: Rate and review completed work
+
+### Platform Features
+- **Multi-language Support**: Uzbek (primary), English, and Russian
 - **Cross-platform**: iOS, Android, and Web support
+- **Real-time Chat**: Instant messaging between users
+- **Secure Payments**: Integrated payment processing
+- **Advanced Search**: Filter by skills, budget, delivery time
+- **Professional Profiles**: Comprehensive user profiles with verification
 
 ## 🏗️ Architecture
 
 This project implements a clean, scalable architecture with:
 
 - **Frontend**: React Native with Expo Router
-- **Backend**: Firebase/Firestore with Expo API Routes
 - **UI Framework**: Tamagui for modern, performant components
 - **Design System**: Atomic Design (Atoms → Molecules → Organisms → Templates → Pages)
-- **Type Safety**: Strict TypeScript configuration
-- **Code Quality**: ESLint with custom rules for architectural enforcement
+- **Type Safety**: Comprehensive TypeScript interfaces
+- **Internationalization**: i18next with automatic language detection
+- **Code Quality**: ESLint with custom architectural enforcement rules
 
 ## 📁 Project Structure
 
 ```
 src/
-├── backend/                    # Server-side logic
-│   ├── api/                   # API route handlers
-│   │   └── users+api.ts       # User CRUD operations
-│   ├── config/                # Configuration files
-│   │   └── firebase.ts        # Firebase setup & emulator config
-│   ├── models/                # Data models
-│   │   └── User.ts           # User interface & class
-│   └── services/              # Business logic
-│       └── UserService.ts     # User operations service
-├── frontend/                  # Client-side application
-│   ├── app/                   # Expo Router pages
-│   │   ├── (tabs)/           # Tab navigation
-│   │   │   ├── _layout.tsx   # Tab layout configuration
-│   │   │   ├── index.tsx     # Home screen with login
-│   │   │   └── explore.tsx   # Explore screen
-│   │   └── _layout.tsx       # Root layout with Tamagui
-│   ├── components/            # UI components (Atomic Design)
-│   │   ├── atoms/            # Basic building blocks
-│   │   │   ├── Button/       # Reusable button component
-│   │   │   └── Input/        # Reusable input component
-│   │   ├── molecules/        # Component combinations
-│   │   │   └── LoginForm/    # Login form with validation
-│   │   └── navigation/       # Navigation components
-│   │       └── TabBarIcon.tsx
-│   ├── constants/            # App constants
-│   │   └── Colors.ts         # Theme colors
+├── shared/                     # Shared utilities & types
+│   ├── types/                 # TypeScript type definitions
+│   │   └── freelancing.ts     # Complete freelancing platform types
+│   ├── constants/             # App constants
+│   │   └── screens.ts         # Screen names and routes
+│   ├── i18n/                  # Internationalization
+│   │   ├── index.ts          # i18n configuration
+│   │   └── locales/          # Translation files
+│   │       ├── en.json       # English translations
+│   │       ├── ru.json       # Russian translations
+│   │       └── uz.json       # Uzbek translations (primary)
 │   └── hooks/                # Custom React hooks
-│       └── useColorScheme.ts # Color scheme detection
-├── shared/                    # Shared utilities & types
-│   ├── types/                # TypeScript type definitions
-│   │   └── api.ts           # API response types
-│   └── utils/               # Utility functions
-│       └── validation.ts    # Zod validation schemas
-└── tamagui.config.ts         # Tamagui configuration
+│       └── useI18n.ts        # Internationalization hook
+├── frontend/                  # Client-side application
+│   └── components/            # UI components (Atomic Design)
+│       ├── atoms/            # Basic building blocks
+│       │   ├── Button/       # Reusable button component
+│       │   ├── Input/        # Reusable input component
+│       │   └── LanguageSelector/ # Language switching component
+│       ├── molecules/        # Component combinations
+│       │   └── LoginForm/    # Login form with validation
+│       └── navigation/       # Navigation components
+│           └── TabBarIcon.tsx # Tab bar icons
+└── app/                       # Expo Router pages
+    ├── (tabs)/               # Main tab navigation
+    │   ├── _layout.tsx       # Tab layout configuration
+    │   ├── index.tsx         # Home/Landing page
+    │   ├── browse-gigs.tsx   # Browse services/gigs
+    │   ├── my-projects.tsx   # Project management
+    │   ├── messages.tsx      # Real-time messaging
+    │   └── profile.tsx       # User profiles
+    └── _layout.tsx           # Root layout with Tamagui
 ```
 
 ## 🌍 Internationalization (i18n)
 
-The app supports three languages with automatic device language detection:
+The platform supports three languages targeting the Uzbekistan market:
 
 ### Supported Languages
-- **English (en)** - Default language
-- **Russian (ru)** - Русский язык
-- **Uzbek (uz)** - O'zbek tili
+- **Uzbek (uz)** - O'zbek tili (Primary language)
+- **English (en)** - English (Fallback language)
+- **Russian (ru)** - Русский язык (Additional language)
 
-### Implementation Details
+### Features
+- **Automatic Detection**: Detects device language on startup
+- **Manual Switching**: Language selector component
+- **Comprehensive Coverage**: All UI elements, messages, and content
+- **Professional Terminology**: Freelancing-specific translations
 
-#### Configuration
-The i18n system is built with `react-i18next` and `expo-localization`:
-
+### Usage in Components
 ```typescript
-// src/shared/i18n/index.ts
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import * as Localization from 'expo-localization';
-```
-
-#### Language Detection
-- Automatically detects device language on app startup
-- Falls back to English if device language is not supported
-- Supports manual language switching via UI
-
-#### Translation Files
-Translation files are organized by language in JSON format:
-
-```
-src/shared/i18n/locales/
-├── en.json    # English translations
-├── ru.json    # Russian translations
-└── uz.json    # Uzbek translations
-```
-
-#### Usage in Components
-Use the `useI18n` hook for translations:
-
-```typescript
-import { useI18n } from '@/shared/hooks/useI18n';
+import { useI18n } from '@/shared';
 
 const MyComponent = () => {
   const { t, changeLanguage, currentLanguage } = useI18n();
   
   return (
-    <Text>{t('auth.welcome')}</Text>
+    <Text>{t('gigs.browseGigs')}</Text>
   );
 };
 ```
 
-#### Language Selector Component
-A reusable language selector component is available:
+### Translation Categories
+- `common.*` - Common UI elements
+- `navigation.*` - Navigation labels
+- `auth.*` - Authentication flows
+- `gigs.*` - Service/gig management
+- `projects.*` - Project management
+- `proposals.*` - Proposal system
+- `orders.*` - Order management
+- `messages.*` - Messaging system
+- `reviews.*` - Review system
+- `earnings.*` - Payment and earnings
+- `categories.*` - Service categories
+- `search.*` - Search and filtering
 
-```typescript
-import { LanguageSelector } from '@/components/atoms/LanguageSelector';
+## 🎨 Freelancing Platform Screens
 
-<LanguageSelector size="small" variant="outlined" />
-```
+### Main Navigation Tabs
+- **Home**: Landing page with hero section, categories, featured gigs
+- **Browse Gigs**: Search and filter freelancer services
+- **My Projects**: Project management and proposal viewing
+- **Messages**: Real-time chat with online indicators
+- **Profile**: User profiles with portfolio, skills, and stats
 
-### Adding New Languages
+### Key Features by Screen
 
-1. Create a new translation file in `src/shared/i18n/locales/`
-2. Add the language code to `SUPPORTED_LANGUAGES` in `useI18n.ts`
-3. Update the `LANGUAGE_NAMES` object with the native language name
-4. Add translations for all existing keys
+#### Home Screen
+- Hero section with search
+- Popular categories
+- Featured gigs
+- Platform statistics
+- "How it works" guide
 
-### Translation Keys Structure
+#### Browse Gigs Screen
+- Advanced search and filters
+- Category browsing
+- Gig cards with ratings and pricing
+- Sort by relevance, price, delivery time
 
-```json
-{
-  "common": { "loading": "Loading...", "error": "Error" },
-  "navigation": { "home": "Home", "explore": "Explore" },
-  "auth": { "welcome": "Welcome", "signIn": "Sign In" },
-  "settings": { "language": "Language", "theme": "Theme" },
-  "app": { "name": "Linkor.uz", "tagline": "Your professional networking platform" }
-}
-```
+#### My Projects Screen
+- Project status tabs (Active, Completed, Cancelled)
+- Proposal management
+- Project details and timeline
+- Budget and milestone tracking
+
+#### Messages Screen
+- Conversation list
+- Real-time messaging
+- Online/offline status
+- File attachments support
+
+#### Profile Screen
+- Professional profile display
+- Portfolio showcase
+- Skills and experience
+- Reviews and ratings
+- Earnings statistics
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - Expo CLI (`npm install -g @expo/cli`)
-- Firebase CLI (`npm install -g firebase-tools`) - for backend development
 
 ### Installation
 
@@ -159,51 +178,16 @@ import { LanguageSelector } from '@/components/atoms/LanguageSelector';
    npm install
    ```
 
-2. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` with your Firebase configuration:
-   ```env
-   # Firebase Configuration
-   EXPO_PUBLIC_FIREBASE_API_KEY=your_api_key_here
-   EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-   EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-   EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
-   
-   # Development
-   NODE_ENV=development
-   EXPO_PUBLIC_API_URL=http://localhost:8081
-   ```
-
-3. **Start the development server**
+2. **Start the development server**
    ```bash
    npm start
    ```
 
-### Firebase Setup (Optional)
-
-For full backend functionality:
-
-1. **Create a Firebase project**
-   - Go to [Firebase Console](https://console.firebase.google.com/)
-   - Create a new project
-   - Enable Firestore Database
-   - Enable Authentication
-
-2. **Configure Firebase locally**
+3. **Run on different platforms**
    ```bash
-   firebase login
-   firebase init firestore
-   firebase init emulators
-   ```
-
-3. **Start Firebase emulators** (for local development)
-   ```bash
-   firebase emulators:start
+   npm run android        # Android emulator
+   npm run ios           # iOS simulator  
+   npm run web           # Web browser
    ```
 
 ## 🛠️ Development
@@ -221,97 +205,90 @@ npm run web           # Run in web browser
 npm run lint          # Run ESLint
 npm run lint:fix      # Fix ESLint issues automatically
 npm run type-check    # Run TypeScript type checking
-npm run format        # Format code with Prettier
-npm run format:check  # Check code formatting
-
-# Build
-npm run build         # Build for production
 ```
 
 ### Code Quality Standards
 
-This project enforces strict code quality standards:
-
-- **TypeScript**: Strict mode enabled with `noImplicitAny`
+- **TypeScript**: Strict typing with comprehensive interfaces
 - **ESLint**: Custom rules enforcing atomic design architecture
-- **Prettier**: Consistent code formatting
-- **Import Organization**: Automatic import sorting and grouping
+- **Import Organization**: Automatic import sorting and barrel exports
+- **Component Architecture**: Enforced separation between atomic design layers
 
-### Atomic Design Enforcement
+### Architectural Rules
+- Atoms cannot import molecules/organisms/templates/pages
+- Molecules cannot import organisms/templates/pages
+- Organisms cannot import templates/pages
+- All imports use absolute paths with barrel exports
 
-ESLint rules prevent architectural violations:
+## 🎨 UI Components & Design System
 
-- **Atoms** cannot import from molecules, organisms, templates, or pages
-- **Molecules** cannot import from organisms, templates, or pages  
-- **Organisms** cannot import from templates or pages
-- **Backend** cannot import from frontend
+Built with Tamagui for optimal performance and modern design:
 
-## 🎨 UI Components
-
-### Design System
-
-Built with Tamagui for optimal performance and developer experience:
-
-- **Atoms**: Button, Input, Text, etc.
-- **Molecules**: LoginForm, SearchBar, etc.
-- **Organisms**: Header, Sidebar, etc.
-- **Templates**: Page layouts
-- **Pages**: Complete screens
+### Component Library
+- **Atoms**: Button, Input, LanguageSelector
+- **Molecules**: LoginForm, SearchBar
+- **Navigation**: TabBarIcon with Lucide icons
 
 ### Example Usage
-
 ```tsx
-import { Button } from '@/atoms/Button';
-import { Input } from '@/atoms/Input';
-import { LoginForm } from '@/molecules/LoginForm';
+import { Button, Input } from '@/atoms';
+import { LoginForm } from '@/molecules';
 
-// Use components with full TypeScript support
-<LoginForm
-  onSubmit={(credentials) => handleLogin(credentials)}
-  isLoading={isLoading}
-  error={error}
-/>
+<Button 
+  variant="primary" 
+  size="md" 
+  icon={<Plus size={16} />}
+>
+  Post Project
+</Button>
 ```
 
-## 🔥 Firebase Integration
+## 💼 Freelancing Platform Types
 
-### Features
+Comprehensive TypeScript interfaces covering:
 
-- **Authentication**: User registration and login
-- **Firestore**: Real-time database for user data
-- **API Routes**: RESTful endpoints using Expo API Routes
-- **Emulator Support**: Local development with Firebase emulators
+- **Users & Profiles**: Freelancer and client profiles
+- **Gigs**: Service offerings with packages and pricing
+- **Projects**: Client project postings
+- **Proposals**: Freelancer bids and proposals
+- **Orders**: Project execution and deliverables
+- **Messages**: Real-time communication
+- **Reviews**: Rating and feedback system
+- **Categories**: Service categorization
+- **Payments**: Earnings and transactions
 
-### API Endpoints
+## 🌟 Key Features Implementation
 
-```
-GET    /api/users              # Get all users
-GET    /api/users?id=123       # Get user by ID
-GET    /api/users?email=...    # Get user by email
-POST   /api/users              # Create new user
-PUT    /api/users?id=123       # Update user
-DELETE /api/users?id=123       # Delete user
-```
+### Search & Discovery
+- Category-based browsing
+- Advanced filtering (price, delivery time, rating)
+- Location-based results
+- Skill-based matching
+
+### Project Management
+- Milestone-based project tracking
+- Proposal comparison tools
+- Real-time progress updates
+- File sharing and collaboration
+
+### Communication
+- Real-time messaging
+- Online/offline status
+- Conversation history
+- File attachments
+
+### Payments & Earnings
+- Secure payment processing
+- Earnings tracking
+- Withdrawal management
+- Transaction history
 
 ## 📱 Platform Support
 
-- **iOS**: Native iOS app
-- **Android**: Native Android app  
+- **iOS**: Native iOS app via Expo
+- **Android**: Native Android app via Expo
 - **Web**: Progressive Web App
-- **Desktop**: Electron app (future)
-
-## 🧪 Testing
-
-```bash
-# Run tests (when implemented)
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Generate coverage report
-npm run test:coverage
-```
+- **Future**: Desktop app support planned
 
 ## 🚀 Deployment
 
@@ -326,49 +303,29 @@ eas build:configure
 
 # Build for production
 eas build --platform all
-
-# Submit to app stores
-eas submit
-```
-
-### Web Deployment
-
-```bash
-# Build for web
-npm run build
-
-# Deploy to Vercel, Netlify, or your preferred platform
 ```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Follow the coding standards and run quality checks
-4. Commit your changes (`git commit -m 'Add amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
-
-### Development Guidelines
-
-- Follow atomic design principles
-- Write TypeScript with strict typing
-- Add proper JSDoc comments for complex functions
-- Ensure all linting and type checking passes
-- Test on multiple platforms before submitting
+2. Create a feature branch (`git checkout -b feature/freelancing-feature`)
+3. Follow the coding standards and architectural guidelines
+4. Ensure all TypeScript types are properly defined
+5. Test on multiple platforms
+6. Submit a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
 - [Expo](https://expo.dev/) - React Native development platform
-- [Tamagui](https://tamagui.dev/) - Universal UI system
-- [Firebase](https://firebase.google.com/) - Backend services
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Zod](https://zod.dev/) - Schema validation
+- [Tamagui](https://tamagui.dev/) - Universal UI system and design tokens
+- [Lucide Icons](https://lucide.dev/) - Beautiful icon library
+- [react-i18next](https://react.i18next.com/) - Internationalization framework
+- [React Hook Form](https://react-hook-form.com/) - Performant forms with validation
 
 ---
 
-**Built with ❤️ for the professional networking community**
+**Connecting talent with opportunity across Uzbekistan** 🇺🇿

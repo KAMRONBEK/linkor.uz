@@ -1,52 +1,70 @@
+import { Briefcase, Home, MessageCircle, Search, User } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
-import React from 'react';
 import { useTheme } from 'tamagui';
 
 import { TabBarIcon } from '@/nav-components';
 import { useI18n } from '@/shared';
 
-interface TabScreenOptions {
-    title: string;
-    tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => React.ReactNode;
-}
-
 export default function TabLayout() {
     const theme = useTheme();
     const { t } = useI18n();
-
-    const getTabScreenOptions = (
-        title: string,
-        iconName: React.ComponentProps<typeof TabBarIcon>['name']
-    ): TabScreenOptions => ({
-        title,
-        tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={iconName} color={color} focused={focused} />
-        ),
-    });
 
     return (
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: theme.color12?.val,
                 tabBarInactiveTintColor: theme.color11?.val,
+                headerShown: false,
                 tabBarStyle: {
                     backgroundColor: theme.background?.val,
                     borderTopColor: theme.borderColor?.val,
                 },
-                headerShown: false,
             }}
         >
             <Tabs.Screen
                 name="index"
-                options={getTabScreenOptions(t('navigation.home'), 'home')}
+                options={{
+                    title: t('navigation.home'),
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon IconComponent={Home} color={color} focused={focused} />
+                    ),
+                }}
             />
             <Tabs.Screen
-                name="explore"
-                options={getTabScreenOptions(t('navigation.explore'), 'code')}
+                name="browse-gigs"
+                options={{
+                    title: t('navigation.browseGigs'),
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon IconComponent={Search} color={color} focused={focused} />
+                    ),
+                }}
             />
             <Tabs.Screen
-                name="settings"
-                options={getTabScreenOptions(t('navigation.settings'), 'settings')}
+                name="my-projects"
+                options={{
+                    title: t('navigation.myProjects'),
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon IconComponent={Briefcase} color={color} focused={focused} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="messages"
+                options={{
+                    title: t('navigation.messages'),
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon IconComponent={MessageCircle} color={color} focused={focused} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: t('navigation.profile'),
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon IconComponent={User} color={color} focused={focused} />
+                    ),
+                }}
             />
         </Tabs>
     );

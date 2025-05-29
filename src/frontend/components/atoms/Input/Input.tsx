@@ -1,12 +1,14 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { TextInput, TextInputProps } from 'react-native';
-import { Stack, styled, Text } from 'tamagui';
+import { Stack, styled, Text, XStack } from 'tamagui';
 
 export interface InputProps extends TextInputProps {
     label?: string;
     error?: string;
     size?: 'sm' | 'md' | 'lg';
     variant?: 'default' | 'filled' | 'outline';
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
 }
 
 const InputContainer = styled(Stack, {
@@ -21,11 +23,11 @@ const InputLabel = styled(Text, {
     color: '$gray12',
 });
 
-const StyledTextInput = styled(TextInput, {
-    name: 'Input',
+const InputWrapper = styled(XStack, {
+    name: 'InputWrapper',
     borderRadius: '$3',
     borderWidth: 1,
-    paddingHorizontal: '$3',
+    alignItems: 'center',
     backgroundColor: '$background',
 
     variants: {
@@ -34,8 +36,6 @@ const StyledTextInput = styled(TextInput, {
                 borderColor: '$gray7',
                 focusStyle: {
                     borderColor: '$blue8',
-                    outlineColor: '$blue8',
-                    outlineWidth: 2,
                 },
             },
             filled: {
@@ -44,8 +44,6 @@ const StyledTextInput = styled(TextInput, {
                 focusStyle: {
                     backgroundColor: '$gray4',
                     borderColor: '$blue8',
-                    outlineColor: '$blue8',
-                    outlineWidth: 2,
                 },
             },
             outline: {
@@ -53,8 +51,6 @@ const StyledTextInput = styled(TextInput, {
                 borderColor: '$gray8',
                 focusStyle: {
                     borderColor: '$blue8',
-                    outlineColor: '$blue8',
-                    outlineWidth: 2,
                 },
             },
         },
@@ -77,11 +73,38 @@ const StyledTextInput = styled(TextInput, {
                 borderColor: '$red8',
                 focusStyle: {
                     borderColor: '$red9',
-                    outlineColor: '$red9',
                 },
             },
         },
     },
+});
+
+const StyledTextInput = styled(TextInput, {
+    name: 'Input',
+    flex: 1,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    outline: 'none',
+
+    variants: {
+        size: {
+            sm: {
+                fontSize: 14,
+            },
+            md: {
+                fontSize: 16,
+            },
+            lg: {
+                fontSize: 18,
+            },
+        },
+    },
+});
+
+const IconContainer = styled(Stack, {
+    name: 'IconContainer',
+    alignItems: 'center',
+    justifyContent: 'center',
 });
 
 const ErrorText = styled(Text, {
@@ -92,24 +115,38 @@ const ErrorText = styled(Text, {
 });
 
 export const Input = forwardRef<TextInput, InputProps>(
-    ({ label, error, size = 'md', variant = 'default', style, ...props }, ref) => (
+    ({ label, error, size = 'md', variant = 'default', leftIcon, rightIcon, style, ...props }, ref) => (
         <InputContainer>
             {label && <InputLabel>{label}</InputLabel>}
-            <StyledTextInput
-                ref={ref}
+            <InputWrapper
                 // @ts-ignore - Tamagui variant typing issue
                 variant={variant}
                 size={size}
                 hasError={!!error}
-                style={[
-                    {
-                        fontSize: size === 'sm' ? 14 : size === 'lg' ? 18 : 16,
-                        color: '#374151',
-                    },
-                    style,
-                ]}
-                {...props}
-            />
+            >
+                {leftIcon && (
+                    <IconContainer marginRight="$2">
+                        {leftIcon}
+                    </IconContainer>
+                )}
+                <StyledTextInput
+                    ref={ref}
+                    // @ts-ignore - Tamagui variant typing issue
+                    size={size}
+                    style={[
+                        {
+                            color: '#374151',
+                        },
+                        style,
+                    ]}
+                    {...props}
+                />
+                {rightIcon && (
+                    <IconContainer marginLeft="$2">
+                        {rightIcon}
+                    </IconContainer>
+                )}
+            </InputWrapper>
             {error && <ErrorText>{error}</ErrorText>}
         </InputContainer>
     )

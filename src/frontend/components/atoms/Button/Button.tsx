@@ -1,11 +1,13 @@
 import React, { forwardRef } from 'react';
 import { Stack, StackProps, styled, Text } from 'tamagui';
 
-export interface ButtonProps extends StackProps {
+export interface ButtonProps extends Omit<StackProps, 'size'> {
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
     size?: 'sm' | 'md' | 'lg';
     children: React.ReactNode;
     disabled?: boolean;
+    icon?: React.ReactNode;
+    iconPosition?: 'left' | 'right';
 }
 
 const StyledButton = styled(Stack, {
@@ -129,20 +131,28 @@ const ButtonText = styled(Text, {
 });
 
 export const Button = forwardRef<any, ButtonProps>(
-    ({ children, variant = 'primary', size = 'md', disabled = false, ...props }, ref) => (
+    ({
+        children,
+        variant = 'primary',
+        size = 'md',
+        disabled = false,
+        icon,
+        iconPosition = 'left',
+        ...props
+    }, ref) => (
         <StyledButton
             ref={ref}
-            // @ts-ignore - Tamagui variant typing issue
+            // @ts-ignore
             variant={variant}
-            // @ts-ignore - Tamagui size typing issue
             size={size}
-            // @ts-ignore - Tamagui disabled typing issue
             disabled={disabled}
             {...props}
         >
+            {icon && iconPosition === 'left' && icon}
             <ButtonText variant={variant} size={size}>
                 {children}
             </ButtonText>
+            {icon && iconPosition === 'right' && icon}
         </StyledButton>
     )
 );
