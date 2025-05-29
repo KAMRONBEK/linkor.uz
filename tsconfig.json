@@ -1,10 +1,82 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "node",
+      "react",
+      "react-native"
+    ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
+      "@/backend/*": [
+        "src/backend/*"
+      ],
+      "@/frontend/*": [
+        "src/frontend/*"
+      ],
+      "@/shared/*": [
+        "src/shared/*"
+      ],
+      "@/shared": [
+        "src/shared"
+      ],
+      "@/components/*": [
+        "src/frontend/components/*"
+      ],
+      "@/atoms/*": [
+        "src/frontend/components/atoms/*"
+      ],
+      "@/atoms": [
+        "src/frontend/components/atoms"
+      ],
+      "@/molecules/*": [
+        "src/frontend/components/molecules/*"
+      ],
+      "@/molecules": [
+        "src/frontend/components/molecules"
+      ],
+      "@/organisms/*": [
+        "src/frontend/components/organisms/*"
+      ],
+      "@/organisms": [
+        "src/frontend/components/organisms"
+      ],
+      "@/templates/*": [
+        "src/frontend/components/templates/*"
+      ],
+      "@/templates": [
+        "src/frontend/components/templates"
+      ],
+      "@/pages/*": [
+        "src/frontend/components/pages/*"
+      ],
+      "@/nav-components": [
+        "src/frontend/components/navigation"
+      ],
+      "@/constants": [
+        "src/frontend/constants"
+      ],
+      "@/hooks": [
+        "src/frontend/hooks"
       ]
     }
   },
@@ -13,5 +85,11 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".expo"
+  ],
+  "extends": "expo/tsconfig.base"
 }
