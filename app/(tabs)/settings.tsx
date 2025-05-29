@@ -15,7 +15,7 @@ import {
 import React from 'react';
 import { ScrollView, Stack, Switch, Text, XStack, YStack } from 'tamagui';
 
-import { Button, LanguageSelector } from '@/atoms';
+import { Button, LanguageSelector, ThemeSwitcher } from '@/atoms';
 import { useI18n } from '@/shared';
 
 export default function SettingsScreen() {
@@ -139,6 +139,8 @@ export default function SettingsScreen() {
                             icon={<Palette size={20} color="$indigo10" />}
                             title={t('settings.theme')}
                             subtitle="Light, dark, or system theme"
+                            rightComponent={<ThemeSwitcher />}
+                            showChevron={false}
                         />
                     </YStack>
 

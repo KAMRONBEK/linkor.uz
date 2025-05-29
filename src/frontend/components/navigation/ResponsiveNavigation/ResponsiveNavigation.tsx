@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from 'react';
 import { Platform } from 'react-native';
 import { Button, Stack, Text, useMedia, useTheme, XStack, YStack } from 'tamagui';
 
-import { LanguageSelector } from '@/atoms';
+import { LanguageSelector, ThemeSwitcher } from '@/atoms';
 import { NAVIGATION_ITEMS, NavigationItem, useI18n } from '@/shared';
 
 interface SidebarItemProps {
@@ -81,9 +81,8 @@ function WebSidebar({ children }: WebSidebarProps) {
                 }}
             >
                 {/* Header */}
-                <XStack
-                    alignItems="center"
-                    justifyContent={isCollapsed ? 'center' : 'space-between'}
+                <YStack
+                    gap="$3"
                     paddingBottom="$4"
                     borderBottomWidth={1}
                     borderBottomColor="$borderColor"
@@ -93,8 +92,13 @@ function WebSidebar({ children }: WebSidebarProps) {
                             {t('app.name')}
                         </Text>
                     )}
-                    <LanguageSelector size="small" variant="ghost" />
-                </XStack>
+
+                    {/* Controls */}
+                    <YStack gap="$2">
+                        <LanguageSelector size="small" variant="ghost" />
+                        <ThemeSwitcher size="sm" variant="compact" />
+                    </YStack>
+                </YStack>
 
                 {/* Navigation Items */}
                 <YStack gap="$2">

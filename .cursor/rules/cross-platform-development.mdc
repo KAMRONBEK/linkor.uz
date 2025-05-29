@@ -1,0 +1,144 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Cross-Platform Development with Expo
+
+## Reference Example: Bluesky Social
+The [Bluesky Social repository](mdc:https:/github.com/bluesky-social/social-app) is an exemplary reference for cross-platform React Native/Expo applications.
+
+### Success Metrics
+- **16.1k GitHub stars** - Community validation
+- **Millions of users** across web, iOS, and Android
+- **Single TypeScript codebase** (94% TypeScript)
+- **Production-proven** at massive scale
+
+### Architecture Lessons from Bluesky
+- **Universal Codebase**: React Native with React Native Web
+- **TypeScript First**: Comprehensive type safety across all platforms
+- **Modular Design**: Clean package separation (like @atproto/api)
+- **Web Service Integration**: Go service in `./bskyweb/` for web deployment
+- **Platform Optimization**: Effective use of Platform.select() when needed
+
+## Our Cross-Platform Implementation
+
+### Responsive Configuration
+Following Bluesky's patterns in [tamagui.config.ts](mdc:tamagui.config.ts):
+
+```typescript
+media: {
+  xs: { maxWidth: 660 },    // Mobile
+  sm: { maxWidth: 800 },    // Large mobile
+  md: { maxWidth: 1020 },   // Tablet  
+  lg: { maxWidth: 1280 },   // Desktop
+  xl: { maxWidth: 1420 },   // Large desktop
+  xxl: { maxWidth: 1600 },  // Extra large
+  hoverNone: { hover: 'none' },
+  pointerCoarse: { pointer: 'coarse' },
+}
+```
+
+### Adaptive Navigation System
+Like Bluesky's responsive approach in [app/(tabs)/_layout.tsx](mdc:app/(tabs)/_layout.tsx):
+
+- **Mobile (< 800px)**: Bottom tab navigation for touch interaction
+- **Web (≥ 800px)**: Sidebar navigation with collapsible design
+- **Automatic Adaptation**: Based on Platform.OS and screen size detection
+
+### Universal Component Patterns
+Following Bluesky's cross-platform component approach:
+
+```typescript
+import { Platform } from 'react-native';
+
+const CrossPlatformComponent = () => (
+  <View style={{
+    ...Platform.select({
+      web: { cursor: 'pointer' },
+      default: {}
+    })
+  }}>
+    {/* Universal content works across all platforms */}
+  </View>
+);
+```
+
+## Phase 1 Freelancing Platform Structure
+
+### Backend API Architecture
+Comprehensive type-safe API structure in [src/backend/types/freelancing.ts](mdc:src/backend/types/freelancing.ts):
+
+- **Authentication API**: Phone/email registration with SMS/email verification
+- **Projects API**: Job posting, search, applications, and management  
+- **User Profiles**: Worker (freelancer) and Employer types
+- **Payment Integration**: Click, Payme, and cash payment methods
+- **Communication**: Real-time chat and notifications
+
+### Frontend Component Architecture
+Atomic design structure in [src/frontend/components/](mdc:src/frontend/components):
+
+- **Atoms**: [Button](mdc:src/frontend/components/atoms/Button/Button.tsx), [Input](mdc:src/frontend/components/atoms/Input/Input.tsx), [LanguageSelector](mdc:src/frontend/components/atoms/LanguageSelector/LanguageSelector.tsx)
+- **Molecules**: [AuthFlow](mdc:src/frontend/components/molecules/AuthFlow/AuthFlow.tsx), [ProjectPostForm](mdc:src/frontend/components/molecules/ProjectPostForm/ProjectPostForm.tsx)
+- **Templates**: [ResponsiveContainer](mdc:src/frontend/components/templates/ResponsiveContainer/ResponsiveContainer.tsx)
+
+### Navigation & Routing
+Shared navigation configuration in [src/shared/constants/navigation.ts](mdc:src/shared/constants/navigation.ts):
+
+```typescript
+export const NAVIGATION_ITEMS: NavigationItem[] = [
+  { href: '/', icon: Home, labelKey: 'navigation.home', name: SCREEN_NAMES.HOME },
+  { href: '/browse-gigs', icon: Search, labelKey: 'navigation.browseGigs', name: SCREEN_NAMES.BROWSE_GIGS },
+  { href: '/my-projects', icon: Briefcase, labelKey: 'navigation.myProjects', name: SCREEN_NAMES.MY_PROJECTS },
+  { href: '/messages', icon: MessageCircle, labelKey: 'navigation.messages', name: SCREEN_NAMES.MESSAGES },
+  { href: '/profile', icon: User, labelKey: 'navigation.profile', name: SCREEN_NAMES.PROFILE }
+];
+```
+
+## Best Practices from Bluesky
+
+### 1. Single Source of Truth
+- Shared constants in [src/shared/constants/](mdc:src/shared/constants)
+- Navigation items defined once, used everywhere
+- Type-safe screen names and routing
+
+### 2. Type Safety Everywhere
+- Comprehensive TypeScript interfaces in [src/backend/types/freelancing.ts](mdc:src/backend/types/freelancing.ts)
+- Strict typing for API responses and form data
+- Platform-specific type guards when needed
+
+### 3. Performance Optimization
+- Responsive breakpoints for efficient rendering
+- Lazy loading and code splitting
+- Optimized for both web and mobile performance
+
+### 4. User Experience Consistency
+- Adaptive UI that feels native on each platform
+- Consistent design system using Tamagui
+- Platform-appropriate interaction patterns
+
+### 5. Scalable Architecture
+- Modular component design
+- Clear separation of concerns
+- Easy to extend and maintain
+
+## Web Deployment Strategy
+Following Bluesky's successful web deployment approach:
+
+- **React Native Web**: Seamless compilation to web
+- **Progressive Web App**: Features for native-like experience
+- **SEO Optimization**: Proper metadata and structure
+- **Performance**: Code splitting and optimization
+
+## Validation of Architecture Choices
+Bluesky's success (16.1k stars, millions of users) validates our architectural decisions:
+
+- ✅ React Native + TypeScript for universal development
+- ✅ Atomic design for scalable component architecture  
+- ✅ Responsive design for all screen sizes
+- ✅ Shared constants for consistency across platforms
+- ✅ Clean separation between frontend/backend/shared code
+
+## Key Takeaways
+The success of Bluesky Social proves that React Native/Expo can effectively serve millions of users across web, iOS, and Android from a single codebase. Their approach demonstrates that with proper architecture, a universal app can provide excellent user experience on all platforms while maintaining code efficiency and developer productivity.
+

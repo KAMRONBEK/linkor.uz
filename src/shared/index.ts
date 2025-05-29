@@ -1,16 +1,15 @@
-// Hooks
-export { useI18n, type SupportedLanguage } from './hooks/useI18n';
+// Shared utilities and types barrel export
 
 // Constants
 export * from './constants/navigation';
 export * from './constants/screens';
 
-// I18n
-export { default as i18n } from './i18n';
+// Internationalization
+export * from './i18n';
 
-// Types
-export * from './types/api';
-export * from './types/freelancing';
+// Hooks
+export * from './hooks/useI18n';
 
-// Types (if any)
-// export * from './types'; 
+// All types from organized type files
+export * from './types/index';
+

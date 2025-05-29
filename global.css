@@ -1,0 +1,58 @@
+/* React Native Web Reset Styles - Based on Expo Documentation */
+html, body, #root {
+  width: 100%;
+  /* To smooth any scrolling behavior */
+  -webkit-overflow-scrolling: touch;
+  margin: 0px;
+  padding: 0px;
+  /* Allows content to fill the viewport and go beyond the bottom */
+  min-height: 100%;
+}
+
+#root {
+  flex-shrink: 0;
+  flex-basis: auto;
+  flex-grow: 1;
+  display: flex;
+  flex: 1;
+}
+
+html {
+  /* Prevent text size change on orientation change */
+  -webkit-text-size-adjust: 100%;
+  height: calc(100% + env(safe-area-inset-top));
+  scrollbar-gutter: stable both-edges;
+}
+
+body {
+  /* Allows you to scroll below the viewport; default value is visible */
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: scrollbar;
+}
+
+/* Enable scrolling for React Native Web */
+.css-view-1dbjc4n {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Specific fix for ScrollView on web */
+.css-view-1dbjc4n[data-focusable="true"] {
+  overflow-y: auto !important;
+  flex: 1;
+}
+
+/* Alternative ScrollView targeting */
+div[style*="overflow: hidden"] {
+  overflow-y: auto !important;
+}
+
+/* Ensure flex containers don't prevent scrolling */
+.css-view-1dbjc4n:has(> .css-view-1dbjc4n[data-focusable="true"]) {
+  flex: 1;
+  overflow: hidden;
+} 

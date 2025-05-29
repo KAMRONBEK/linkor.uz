@@ -22,7 +22,7 @@ export default function MyProjectsScreen() {
             </Stack>
 
             <ScrollView flex={1}>
-                <YStack padding="$4" gap="$4">
+                <YStack padding="$4" gap="$4" >
                     {/* Project Status Tabs */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <XStack gap="$3" paddingHorizontal="$1">
@@ -59,7 +59,7 @@ export default function MyProjectsScreen() {
                                 <XStack alignItems="center" gap="$3" marginBottom="$3">
                                     <Briefcase size={20} color="$blue10" />
                                     <Text fontSize="$4" fontWeight="500" flex={1}>
-                                        Sample Project Title {i}
+                                        {t('projects.sampleProjectTitle')} {i}
                                     </Text>
                                     <Stack
                                         backgroundColor="$green9"
@@ -74,20 +74,20 @@ export default function MyProjectsScreen() {
                                 </XStack>
 
                                 <Text fontSize="$3" color="$gray10" marginBottom="$3">
-                                    Looking for a skilled developer to create a modern web application...
+                                    {t('projects.sampleProjectDescription')}
                                 </Text>
 
                                 <XStack justifyContent="space-between" alignItems="center" marginBottom="$3">
                                     <XStack alignItems="center" gap="$4">
                                         <Text fontSize="$3" color="$gray10">
-                                            Budget: <Text fontWeight="600" color="$green10">$500-$1000</Text>
+                                            {t('projects.budget')}: <Text fontWeight="600" color="$green10">$500-$1000</Text>
                                         </Text>
                                         <Text fontSize="$3" color="$gray10">
                                             {t('proposals.proposals')}: <Text fontWeight="600">12</Text>
                                         </Text>
                                     </XStack>
                                     <Text fontSize="$2" color="$gray9">
-                                        Posted 3 days ago
+                                        {t('common.posted')} 3 {t('projects.postedDaysAgo')}
                                     </Text>
                                 </XStack>
 
@@ -107,10 +107,10 @@ export default function MyProjectsScreen() {
                     <Stack alignItems="center" paddingVertical="$8">
                         <Briefcase size={48} color="$gray8" />
                         <Text fontSize="$4" color="$gray10" marginTop="$3" textAlign="center">
-                            No projects yet
+                            {t('projects.noProjectsYet')}
                         </Text>
                         <Text fontSize="$3" color="$gray9" marginTop="$2" textAlign="center" maxWidth={200}>
-                            Post your first project to find talented freelancers
+                            {t('projects.postFirstProject')}
                         </Text>
                         <Button marginTop="$4" icon={<Plus size={16} />}>
                             {t('projects.postProject')}

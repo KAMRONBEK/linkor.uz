@@ -1,4 +1,4 @@
-import { Briefcase, Home, MessageCircle, Search, User } from '@tamagui/lucide-icons';
+import { Briefcase, Home, MessageCircle, Search, Settings, User } from '@tamagui/lucide-icons';
 
 import { SCREEN_NAMES } from './screens';
 
@@ -39,5 +39,11 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
         icon: User,
         labelKey: 'navigation.profile',
         name: SCREEN_NAMES.PROFILE
+    },
+    {
+        href: '/settings',
+        icon: Settings,
+        labelKey: 'navigation.settings',
+        name: SCREEN_NAMES.SETTINGS
     },
 ]; 

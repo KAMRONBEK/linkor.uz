@@ -3,9 +3,9 @@ import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons';
 import { Select } from '@tamagui/select';
 import { Sheet } from '@tamagui/sheet';
 import React from 'react';
+import { AdaptWhen } from 'tamagui';
 
 import { useI18n, type SupportedLanguage } from '@/shared/hooks/useI18n';
-import { AdaptWhen } from 'tamagui';
 
 export interface LanguageSelectorProps {
     size?: 'small' | 'medium' | 'large';

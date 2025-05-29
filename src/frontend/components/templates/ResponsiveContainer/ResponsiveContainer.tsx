@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import { Platform } from 'react-native';
 import { ScrollView, Stack, XStack, YStack, useMedia } from 'tamagui';
 
 interface ResponsiveContainerProps extends PropsWithChildren {
@@ -12,7 +11,7 @@ interface ResponsiveContainerProps extends PropsWithChildren {
     /** Optional sidebar content for larger screens */
     sidebar?: React.ReactNode;
     /** Sidebar width percentage (only used on web) */
-    sidebarWidth?: number;
+    _sidebarWidth?: number;
 }
 
 export function ResponsiveContainer({
@@ -21,7 +20,7 @@ export function ResponsiveContainer({
     maxWidth = 1200,
     padded = true,
     sidebar,
-    sidebarWidth = 30,
+    _sidebarWidth = 30,
 }: ResponsiveContainerProps) {
     const media = useMedia();
 
@@ -45,18 +44,20 @@ export function ResponsiveContainer({
         );
     };
 
-    // Desktop: multi-column layout with optional sidebar
-    const DesktopLayout = () => {
-        const mainWidth = sidebar ? (100 - sidebarWidth) : 100;
-
-        return (
-            <XStack flex={1} backgroundColor="$background">
+    // Desktop: centered layout with max-width constraint
+    const DesktopLayout = () => (
+        <Stack flex={1} backgroundColor="$background" alignItems="center">
+            <XStack
+                flex={1}
+                width="100%"
+                maxWidth={maxWidth}
+                justifyContent="center"
+            >
                 {/* Main content area */}
                 <Stack
-                    flex={1}
-                    maxWidth={sidebar ? `${mainWidth}%` : maxWidth}
-                    alignSelf="center"
-                    width="100%"
+                    flex={sidebar ? 1 : undefined}
+                    width={sidebar ? undefined : "100%"}
+                    minWidth={0} // Prevent flex overflow
                 >
                     {scrollable ? (
                         <ScrollView
@@ -64,7 +65,7 @@ export function ResponsiveContainer({
                             padding={padding}
                             showsVerticalScrollIndicator={false}
                         >
-                            <YStack gap={gap} maxWidth="100%">
+                            <YStack gap={gap} width="100%">
                                 {children}
                             </YStack>
                         </ScrollView>
@@ -78,22 +79,22 @@ export function ResponsiveContainer({
                 {/* Sidebar for larger screens */}
                 {sidebar && (
                     <YStack
-                        width={`${sidebarWidth}%`}
+                        width={320} // Fixed width instead of percentage
                         backgroundColor="$background"
                         borderLeftWidth={1}
                         borderLeftColor="$borderColor"
                         padding={padding}
-                        $md={{ display: 'none' }} // Hide sidebar on medium screens and below
+                        $lg={{ display: 'none' }} // Hide sidebar on large screens and below
                     >
                         {sidebar}
                     </YStack>
                 )}
             </XStack>
-        );
-    };
+        </Stack>
+    );
 
-    // Show desktop layout on larger web screens, mobile layout otherwise
-    if (Platform.OS === 'web' && media.gtMd) {
+    // Show desktop layout on larger screens, mobile layout otherwise
+    if (media.gtMd) {
         return <DesktopLayout />;
     }
 
