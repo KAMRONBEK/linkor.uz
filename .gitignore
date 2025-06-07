@@ -120,3 +120,4 @@ app-example
 
 # Local development
 *.local
+.vercel
