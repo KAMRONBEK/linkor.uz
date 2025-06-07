@@ -15,7 +15,11 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "type-check": "tsc --noEmit",
     "build": "expo export",
-    "dev": "expo start --dev-client"
+    "build:web": "expo export --platform web",
+    "dev": "expo start --dev-client",
+    "deploy:dev": "npm run build:web && npx eas-cli deploy --environment development",
+    "deploy:preview": "npm run build:web && npx eas-cli deploy --environment preview",
+    "deploy:prod": "npm run build:web && npx eas-cli deploy --prod"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
